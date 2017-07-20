@@ -51,6 +51,12 @@ export class Droppable implements OnInit, OnDestroy {
     @Input() dropEnabled = true;
 
     /**
+     * The data that will be available to the droppable directive on its `onDrop()` event. this data
+     * help to identify the context of the dropped object.
+     */
+    @Input() dropData;
+
+    /**
      * @private
      */
     dragStartSubscription: Subscription;
@@ -110,7 +116,7 @@ export class Droppable implements OnInit, OnDestroy {
         e.stopPropagation();
 
         this.ng2DragDropService.onDragEnd.next();
-        this.onDrop.emit(new DropEvent(e, this.ng2DragDropService.dragData));
+        this.onDrop.emit(new DropEvent(e, this.ng2DragDropService.dragData, this.dropData));
         this.ng2DragDropService.dragData = null;
         this.ng2DragDropService.scope = null;
     }
